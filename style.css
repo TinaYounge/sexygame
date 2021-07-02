@@ -1,0 +1,16 @@
+#myCanvas {
+  display: block;
+  margin: auto;
+  opacity: 1;
+  background-image: url(./Capture.PNG);
+  /* width: 800;
+  height: 400; */
+  /* object-fit: contain;
+  background: url(mountain.jpg); */
+  background-repeat: no-repeat;
+  background-size: 800px 300px;
+  background-color: gray;
+}
+/* .opacity {
+  
+} */
