@@ -2,13 +2,13 @@
   display: block;
   margin: auto;
   opacity: 1;
-  background-image: url(https://images.theconversation.com/files/243663/original/file-20181102-83644-b06itk.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop);
+  background-image: url("Capture.PNG");
   /* width: 800;
   height: 400; */
   /* object-fit: contain;
   background: url(mountain.jpg); */
   background-repeat: no-repeat;
-  background-size: 800px 400px;
+  background-size: 800px 300px;
   background-color: gray;
 }
 /* .opacity {
