@@ -1,6 +1,10 @@
+body {
+  background-color: blueviolet;
+}
 #myCanvas {
   display: block;
   margin: auto;
+  margin-top: 50px;
   opacity: 1;
   background-image: url("Capture.PNG");
   /* width: 800;
