@@ -6,13 +6,13 @@ body {
   margin: auto;
   margin-top: 50px;
   opacity: 1;
-  background-image: url("Capture.PNG");
+  background-image: url("https://javtube.com/javpic/yua-mikami/48/yua-mikami-1.jpg");
   /* width: 800;
   height: 400; */
   /* object-fit: contain;
   background: url(mountain.jpg); */
   background-repeat: no-repeat;
-  background-size: 800px 300px;
+  background-size: 300px 300px;
   background-color: gray;
 }
 /* .opacity {

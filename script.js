@@ -7,30 +7,30 @@ var rightPressed = false,
   leftPressed = false;
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
-let boxX = 400,
-  boxY = 300,
+let boxX = 150,
+  boxY = 470,
   boxWid = 50,
   boxHig = 50;
 let dotX = boxX + boxWid / 2,
   dotY = boxY + boxHig / 2;
 let dx = 2,
   dy = 5,
-  ballRadius = 10;
-let interval = setInterval(draw, 10);
+  ballRadius = 5;
+let interval = setInterval(draw, 50);
 let paddleHeight = 10,
-  paddleWidth = 200,
+  paddleWidth = 100,
   paddleX = (canvas.width - paddleWidth) / 2;
 let brickRowCount = 8,
-  brickColumnCount = 10,
+  brickColumnCount = 4,
   brickOffsetLeft = 1,
   brickPadding = 2;
 let brickWidth =
-  (800 - (brickColumnCount - 1) * brickPadding - brickOffsetLeft) /
+  (300 - (brickColumnCount - 1) * brickPadding - brickOffsetLeft) /
   brickColumnCount;
 let brickHeight = 20,
   brickOffsetTop = 130;
 let bricks = [];
-let score = 9;
+let score = 0;
 let mySound;
 mySound = new sound("./sugoi-nya.mp3");
 
@@ -163,7 +163,7 @@ function collisionDetection() {
 function drawScore() {
   ctx.font = "20px solid Arial";
   ctx.fillStyle = "red";
-  ctx.fillText("Score: " + score, 6, 10);
+  ctx.fillText("Score: " + score, 10, 30);
 }
 // sound
 function sound(src) {
@@ -200,7 +200,7 @@ function draw() {
     if (dotX > paddleX && dotX < paddleX + paddleWidth) {
       dy = -dy;
     } else {
-      alert("GAME OVER");
+      alert("Yua Mikami hates you");
       document.location.reload();
       clearInterval(interval);
     }
