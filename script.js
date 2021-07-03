@@ -15,13 +15,13 @@ let dotX = boxX + boxWid / 2,
   dotY = boxY + boxHig / 2;
 let dx = 2,
   dy = 5,
-  ballRadius = 50;
-let interval = setInterval(draw, 1);
+  ballRadius = 10;
+let interval = setInterval(draw, 10);
 let paddleHeight = 50,
   paddleWidth = 800,
   paddleX = (canvas.width - paddleWidth) / 2;
 let brickRowCount = 8,
-  brickColumnCount = 9,
+  brickColumnCount = 10,
   brickOffsetLeft = 1,
   brickPadding = 2;
 let brickWidth =
@@ -31,9 +31,8 @@ let brickHeight = 20,
   brickOffsetTop = 130;
 let bricks = [];
 let score = 9;
-// let mySound;
-
-// mySound = new sound("./sugoi-nya.mp3");
+let mySound;
+mySound = new sound("./sugoi-nya.mp3");
 
 for (var c = 0; c < brickColumnCount; c++) {
   bricks[c] = [];
@@ -46,26 +45,31 @@ for (var c = 0; c < brickColumnCount; c++) {
 
 function drawBall() {
   ctx.beginPath();
-  ctx.drawImage(
-    img,
-    dotX - ballRadius / 2,
-    dotY - ballRadius / 2,
-    ballRadius,
-    ballRadius
-  );
+  // ctx.drawImage(
+  //   img,
+  //   dotX - ballRadius / 2,
+  //   dotY - ballRadius / 2,
+  //   ballRadius,
+  //   ballRadius
+  // );
+  ctx.arc(dotX, dotY, ballRadius, 0, Math.PI * 2);
+  ctx.fillStyle = "#0095DD";
   ctx.fill();
   ctx.closePath();
+  console.log("ball");
 }
 
 function drawPaddle() {
   ctx.beginPath();
-  ctx.drawImage(
-    imgjum,
-    paddleX,
-    canvas.height - paddleHeight,
-    paddleWidth,
-    paddleHeight
-  );
+  // ctx.drawImage(
+  //   imgjum,
+  //   paddleX,
+  //   canvas.height - paddleHeight,
+  //   paddleWidth,
+  //   paddleHeight
+  // );
+  ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+  ctx.fillStyle = "#79D5DAC3";
   ctx.fill();
   ctx.closePath();
 }
@@ -90,25 +94,28 @@ function drawBricks() {
   for (var c = 0; c < brickColumnCount; c++) {
     for (var r = 0; r < brickRowCount; r++) {
       if (bricks[c][r].status != 0) {
-        var brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
-        var brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
+        let brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
+        let brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
         bricks[c][r].x = brickX;
         bricks[c][r].y = brickY;
         ctx.beginPath();
-        // ctx.drawImage(imgs, brickX, brickY, brickWidth, brickHeight);
         ctx.rect(brickX, brickY, brickWidth, brickHeight);
         switch (bricks[c][r].status) {
           case 1:
             ctx.fillStyle = "#79D5DAC3";
+
             break;
           case 2:
             ctx.fillStyle = "#FFC300";
+
             break;
           case 3:
-            ctx.fillStyle = "##FF5733";
+            ctx.fillStyle = "#FF5733";
+
             break;
           case 4:
             ctx.fillStyle = "#900C3F";
+
             break;
           case 5:
             ctx.fillStyle = "#581845";
@@ -129,21 +136,25 @@ function collisionDetection() {
       var b = bricks[c][r];
       if (b.status != 0) {
         if (
-          dotX > b.x &&
-          dotX < b.x + brickWidth &&
-          dotY > b.y &&
-          dotY < b.y + brickHeight
+          dotX >= b.x &&
+          dotX <= b.x + brickWidth &&
+          dotY >= b.y &&
+          dotY <= b.y + brickHeight
         ) {
           dy = -dy;
-          b.status += -1;
+          bricks[c][r].status -= 1;
+          console.log("colision");
           score++;
-          score++;
-
-          //
+          if (score == 3000) {
+            alert("YOU WIN, CONGRATS!");
+            document.location.reload();
+            clearInterval(interval);
+          }
         }
-        // } else if (b.sounds == 0) {
-        //   mySound.play();
-        //   mySound.stop();
+        if (b.status == 0) {
+          mySound.play();
+          // mySound.stop();
+        }
       }
     }
   }
@@ -152,7 +163,7 @@ function collisionDetection() {
 function drawScore() {
   ctx.font = "20px solid Arial";
   ctx.fillStyle = "red";
-  ctx.fillText("Score: " + score * 2, 8, 10);
+  ctx.fillText("Score: " + score, 6, 10);
 }
 // sound
 function sound(src) {
@@ -160,7 +171,7 @@ function sound(src) {
   this.sound = document.createElement("audio");
   this.sound.src = src;
   this.sound.setAttribute("preload", "auto");
-  this.sound.setAttribute("controls", "none");
+  // this.sound.setAttribute("controls", "none");
   this.sound.style.display = "none";
   document.body.appendChild(this.sound);
   this.play = function () {
@@ -178,17 +189,22 @@ function draw() {
   drawPaddle();
   drawScore();
   collisionDetection();
-  // bouncing off the top and bottom
-  if (dotY + dy > canvas.height - ballRadius || dotY + dy < ballRadius) {
-    dy = -dy;
-  }
   // Bouncing off the left and right
   if (dotX + dx > canvas.width - ballRadius || dotX + dx < ballRadius) {
     dx = -dx;
   }
-  dotX += dx;
-  dotY += dy;
-
+  // bouncing off the top and bottom
+  if (dotY + dy < ballRadius) {
+    dy = -dy;
+  } else if (dotY + dy > canvas.height - ballRadius - paddleHeight) {
+    if (dotX > paddleX && dotX < paddleX + paddleWidth) {
+      dy = -dy;
+    } else {
+      alert("GAME OVER");
+      document.location.reload();
+      clearInterval(interval);
+    }
+  }
   if (rightPressed) {
     paddleX += 7;
     if (paddleX + paddleWidth > canvas.width) {
@@ -200,17 +216,6 @@ function draw() {
       paddleX = 0;
     }
   }
-  if (dotY + dy < ballRadius) {
-    dotY += -dy;
-    dx += -dx;
-  } else if (dotY + dy > canvas.height - ballRadius) {
-    if (dotX > paddleX && dotX < paddleX + paddleWidth) {
-      dotY += dy;
-    } else {
-      alert("GAME OVER");
-      document.location.reload();
-      clearInterval(interval);
-    }
-  }
+  dotX += dx;
+  dotY += dy;
 }
-draw();
