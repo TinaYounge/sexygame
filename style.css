@@ -1,6 +1,13 @@
 body {
   background-color: blueviolet;
+  background-image: url("https://images-na.ssl-images-amazon.com/images/I/81MkE1P-9FL._SL1200_.jpg");
+  height: 100%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+
 #myCanvas {
   display: block;
   margin: auto;
@@ -13,8 +20,8 @@ body {
   background: url(mountain.jpg); */
   background-repeat: no-repeat;
   background-size: 300px 300px;
-  background-color: gray;
+  background-color: green;
 }
-/* .opacity {
-  
-} */
+#banana {
+  display: none;
+}

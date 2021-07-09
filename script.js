@@ -7,6 +7,7 @@ var rightPressed = false,
   leftPressed = false;
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+
 let boxX = 150,
   boxY = 470,
   boxWid = 50,
@@ -16,7 +17,7 @@ let dotX = boxX + boxWid / 2,
 let dx = 2,
   dy = 5,
   ballRadius = 5;
-let interval = setInterval(draw, 20);
+let interval = setInterval(draw, 30);
 let paddleHeight = 10,
   paddleWidth = 100,
   paddleX = (canvas.width - paddleWidth) / 2;
@@ -45,15 +46,15 @@ for (var c = 0; c < brickColumnCount; c++) {
 
 function drawBall() {
   ctx.beginPath();
-  // ctx.drawImage(
-  //   img,
-  //   dotX - ballRadius / 2,
-  //   dotY - ballRadius / 2,
-  //   ballRadius,
-  //   ballRadius
-  // );
-  ctx.arc(dotX, dotY, ballRadius, 0, Math.PI * 2);
-  ctx.fillStyle = "#0095DD";
+  ctx.drawImage(
+    img,
+    dotX - ballRadius,
+    dotY - ballRadius,
+    ballRadius * 2,
+    ballRadius * 2
+  );
+  // ctx.arc(dotX, dotY, ballRadius, 0, Math.PI * 2);
+  // ctx.fillStyle = "#0095DD";
   ctx.fill();
   ctx.closePath();
   console.log("ball");
@@ -145,7 +146,7 @@ function collisionDetection() {
           bricks[c][r].status -= 1;
           console.log("colision");
           score++;
-          if (score == 3000) {
+          if (score == 70) {
             alert("YOU WIN, CONGRATS!");
             document.location.reload();
             clearInterval(interval);
